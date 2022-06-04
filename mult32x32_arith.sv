@@ -12,23 +12,23 @@ module mult32x32_arith (
     output logic [63:0] product  // Miltiplication product
 );
 
-logic mux_4_1_res [7:0]; //results of the mux's
-logic mux_2_1_res [15:0];
+logic [7:0] mux_4_1_res; //results of the mux's
+logic [15:0] mux_2_1_res;
 
-logic mult_16_8_res [23:0]; //result of the 16x8 multiplier
+logic [23:0] mult_16_8_res; //result of the 16x8 multiplier
 
-logic shifter_0_res [63:0]; //results of all the shifters
-logic shifter_8_res [63:0];
-logic shifter_16_res [63:0];
-logic shifter_24_res [63:0];
-logic shifter_32_res [63:0];
-logic shifter_40_res [63:0];
+logic [63:0]; shifter_0_res //results of all the shifters
+logic [63:0] shifter_8_res;
+logic [63:0] shifter_16_res;
+logic [63:0] shifter_24_res;
+logic [63:0] shifter_32_res;
+logic [63:0] shifter_40_res;
 
-logic mux_8_1_res [63:0]; //result of mux 8->1 (shift select)
+logic [63:0] mux_8_1_res; //result of mux 8->1 (shift select)
 
-logic adder_64_res [63:0]; //result of 64 bit adder
+logic [63:0] adder_64_res; //result of 64 bit adder
 
-always_ff @(posedge clk) begin
+always_comb begin
 	//mux 4->1 result
 	case (a_sel)
 		2'b00: mux_4_1_res = a[7:0];
@@ -69,7 +69,9 @@ always_ff @(posedge clk) begin
 	
 	//64 bit adder result
 	adder_64_res = product + mux_8_1_res;
-	
+end
+
+always_ff @(posedge clk) begin
 	//update product register (FF)
 	if (reset == 1 || clr_prod == 1) begin
 		product <= 0;
