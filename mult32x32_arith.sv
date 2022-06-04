@@ -17,7 +17,7 @@ logic [15:0] mux_2_1_res;
 
 logic [23:0] mult_16_8_res; //result of the 16x8 multiplier
 
-logic [63:0]; shifter_0_res //results of all the shifters
+logic [63:0] shifter_0_res; //results of all the shifters
 logic [63:0] shifter_8_res;
 logic [63:0] shifter_16_res;
 logic [63:0] shifter_24_res;
