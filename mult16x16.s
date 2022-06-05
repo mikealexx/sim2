@@ -19,16 +19,18 @@ main:   # Load data from memory
         ori		t0, t0, 0xff
         slli	t0, t0, 8
         ori		t0, t0, 0xff
-        
-####################
-# Start of your code
-
-# Use the code below for 16x8 multiplication
-#   mul		<PROD>, <FACTOR1>, <FACTOR2>
-#   and		<PROD>, <PROD>, t0
-
-# End of your code
-####################
+		
+		# CODE: 16x16
+		andi 	t5, t4, 0xff #load only first 8 bits from b
+		mul 	t1, t3, t5 #first multiplication of 16x8
+		and		t1, t1, t0
+		
+		srli 	t5, t4, 8 #shift the 8 bits to the right
+		mul 	t2, t3, t5
+		and 	t2, t2, t0
+		slli 	t2, t2, 8 #shift the result 8 bits to the left
+		
+		add 	t6, t1, t2 #add the results of the two multiplications
 		
 finish: addi    a0, x0, 1
         addi    a1, t6, 0
